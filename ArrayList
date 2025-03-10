@@ -15,6 +15,22 @@ class ListaArray {
         array[tamanho++] = elemento;
     }
 
+    public void adicionar(int elemento, int posicao) {
+        if (tamanho == array.length) {
+            System.out.println("Erro: Lista cheia!");
+            return;
+        }
+        if (posicao < 0 || posicao > tamanho) {
+            System.out.println("Erro: Posição inválida!");
+            return;
+        }
+        for (int i = tamanho; i > posicao; i--) {
+            array[i] = array[i - 1];
+        }
+        array[posicao] = elemento;
+        tamanho++;
+    }
+
     public void remover(int posicao) {
         if (posicao < 0 || posicao >= tamanho) {
             System.out.println("Erro: Posição inválida!");
@@ -50,5 +66,9 @@ public class TesteLista {
         lista.adicionar(50);
         lista.adicionar(60);
         lista.imprimirLista();
+        
+        lista.adicionar(25, 1);
+        lista.imprimirLista();
     }
 }
+
