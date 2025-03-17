@@ -1,0 +1,173 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Produto {
+    private int codigo;
+    private String nome;
+    private int quantidade;
+
+    public Produto(int codigo, String nome, int quantidade) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.quantidade = quantidade;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    @Override
+    public String toString() {
+        return "Código: " + codigo + ", Nome: " + nome + ", Quantidade: " + quantidade;
+    }
+}
+
+class GestorDeProdutos {
+    private List<Produto> produtos;
+
+    public GestorDeProdutos() {
+        this.produtos = new ArrayList<>();
+    }
+
+    public void adicionarProduto(Produto produto) {
+        produtos.add(produto);
+        System.out.println("Produto adicionado com sucesso!");
+    }
+
+    public boolean removerProdutoPorCodigo(int codigo) {
+        return produtos.removeIf(produto -> produto.getCodigo() == codigo);
+    }
+
+    public boolean removerProdutoPorNome(String nome) {
+        return produtos.removeIf(produto -> produto.getNome().equalsIgnoreCase(nome));
+    }
+
+    public Produto buscarPorCodigo(int codigo) {
+        for (Produto produto : produtos) {
+            if (produto.getCodigo() == codigo) {
+                return produto;
+            }
+        }
+        return null;
+    }
+
+    public Produto buscarPorNome(String nome) {
+        for (Produto produto : produtos) {
+            if (produto.getNome().equalsIgnoreCase(nome)) {
+                return produto;
+            }
+        }
+        return null;
+    }
+
+    public void listarProdutos() {
+        if (produtos.isEmpty()) {
+            System.out.println("Nenhum produto cadastrado.");
+        } else {
+            for (Produto produto : produtos) {
+                System.out.println(produto);
+            }
+        }
+    }
+}
+
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        GestorDeProdutos gestor = new GestorDeProdutos();
+        Scanner scanner = new Scanner(System.in);
+
+        boolean continuar = true;
+
+        while (continuar) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Adicionar produto");
+            System.out.println("2. Remover produto por código");
+            System.out.println("3. Remover produto por nome");
+            System.out.println("4. Buscar produto por código");
+            System.out.println("5. Buscar produto por nome");
+            System.out.println("6. Listar produtos");
+            System.out.println("7. Sair");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Digite o código do produto: ");
+                    int codigo = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Digite o nome do produto: ");
+                    String nome = scanner.nextLine();
+                    System.out.print("Digite a quantidade do produto: ");
+                    int quantidade = scanner.nextInt();
+                    Produto produto = new Produto(codigo, nome, quantidade);
+                    gestor.adicionarProduto(produto);
+                    break;
+                case 2:
+                    System.out.print("Digite o código do produto a ser removido: ");
+                    int codigoRemover = scanner.nextInt();
+                    if (gestor.removerProdutoPorCodigo(codigoRemover)) {
+                        System.out.println("Produto removido com sucesso!");
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                    break;
+                case 3:
+                    System.out.print("Digite o nome do produto a ser removido: ");
+                    String nomeRemover = scanner.nextLine();
+                    if (gestor.removerProdutoPorNome(nomeRemover)) {
+                        System.out.println("Produto removido com sucesso!");
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                    break;
+                case 4:
+                    System.out.print("Digite o código do produto: ");
+                    int codigoBuscar = scanner.nextInt();
+                    Produto produtoEncontradoPorCodigo = gestor.buscarPorCodigo(codigoBuscar);
+                    if (produtoEncontradoPorCodigo != null) {
+                        System.out.println("Produto encontrado: " + produtoEncontradoPorCodigo);
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                    break;
+                case 5:
+                    System.out.print("Digite o nome do produto: ");
+                    String nomeBuscar = scanner.nextLine();
+                    Produto produtoEncontradoPorNome = gestor.buscarPorNome(nomeBuscar);
+                    if (produtoEncontradoPorNome != null) {
+                        System.out.println("Produto encontrado: " + produtoEncontradoPorNome);
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                    break;
+                case 6:
+                    System.out.println("Lista de produtos:");
+                    gestor.listarProdutos();
+                    break;
+                case 7:
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+
+        scanner.close();
+    }
+}
