@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class ListaArray {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ListaArray lista = new ListaArray();
+
+        System.out.println("Digite o número de elementos que deseja adicionar: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Limpa o buffer
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("Digite o elemento " + (i + 1) + ": ");
+            String elemento = scanner.nextLine();
+            lista.adicionar(elemento);
+        }
+
+        System.out.println("Lista atual: ");
+        for (int i = 0; i < lista.obterNumElementos(); i++) {
+            System.out.println("Elemento na posição " + i + ": " + lista.obter(i));
+        }
+
+        scanner.close();
+    }
+}
