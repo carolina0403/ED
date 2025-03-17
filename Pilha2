@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class Pilha {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite a capacidade da pilha: ");
+        int capacidade = scanner.nextInt();
+
+        Pilha pilha = new Pilha(capacidade);
+
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("Escolha uma operação: 1-Push 2-Pop 3-Peek 4-Exibir Pilha 5-Sair");
+            int opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("Digite o elemento a ser empilhado: ");
+                    int elemento = scanner.nextInt();
+                    pilha.push(elemento);
+                    break;
+                case 2:
+                    int removido = pilha.pop();
+                    if (removido != -1) {
+                        System.out.println("Elemento removido: " + removido);
+                    }
+                    break;
+                case 3:
+                    int topo = pilha.peek();
+                    if (topo != -1) {
+                        System.out.println("Elemento no topo: " + topo);
+                    }
+                    break;
+                case 4:
+                    pilha.imprimirPilha();
+                    break;
+                case 5:
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
+
+        scanner.close();
+    }
+}
