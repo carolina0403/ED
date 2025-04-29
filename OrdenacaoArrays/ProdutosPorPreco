@@ -1,0 +1,39 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class Produto {
+    String nome;
+    double preco;
+
+    public Produto(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+}
+
+public class OrdenarProdutos {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Produto> produtos = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            System.out.print("Digite o nome do " + (i + 1) + "º produto: ");
+            String nome = scanner.nextLine();
+            System.out.print("Digite o preço do " + (i + 1) + "º produto: ");
+            double preco = scanner.nextDouble();
+            scanner.nextLine(); // Limpa o buffer
+            produtos.add(new Produto(nome, preco));
+        }
+
+        produtos.sort(Comparator.comparingDouble(produto -> -produto.preco));
+
+        System.out.println("\nProdutos ordenados do mais caro para o mais barato:");
+        for (Produto produto : produtos) {
+            System.out.printf("%s: R$ %.2f%n", produto.nome, produto.preco);
+        }
+
+        scanner.close();
+    }
+}
