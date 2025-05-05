@@ -1,0 +1,32 @@
+package ordenacao;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class OrdenarProdutos {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Produto[] produtos = new Produto[10];
+
+        System.out.println("Digite nome e preço de 10 produtos:");
+        for (int i = 0; i < produtos.length; i++) {
+            System.out.println("Produto " + (i + 1) + ":");
+            System.out.print("Nome: ");
+            String nome = scanner.nextLine();
+            System.out.print("Preço: ");
+            double preco = scanner.nextDouble();
+            scanner.nextLine(); // Consumir a quebra de linha
+            produtos[i] = new Produto(nome, preco);
+        }
+
+        Arrays.sort(produtos, Comparator.comparingDouble((Produto p) -> p.preco).reversed());
+
+        System.out.println("\nProdutos ordenados pelo preço (do mais caro ao mais barato):");
+        for (Produto produto : produtos) {
+            System.out.println(produto.nome + " - R$" + String.format("%.2f", produto.preco));
+        }
+
+        scanner.close();
+    }
+}
